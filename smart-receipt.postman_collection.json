@@ -1,0 +1,523 @@
+{
+	"info": {
+		"_postman_id": "dc22d450-3398-4ce9-a544-f01f8a58349c",
+		"name": "smart-receipt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31893761"
+	},
+	"item": [
+		{
+			"name": "auth controller",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.admin\",\r\n    \"password\": \"admin\",\r\n    \"fullName\": \"admin admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"body = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"token\", body.token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"demo@demo.demo\",\r\n    \"password\": \"demo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category controller",
+			"item": [
+				{
+					"name": "all categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Овощи и фрукты\",\r\n    \"description\": \"Овощи и фрукты\",\r\n    \"monthlyLimit\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Молочные продукты\",\r\n    \"monthlyLimit\": 5000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "receipt controller",
+			"item": [
+				{
+					"name": "upload text receipt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\" : \"Кассовый чек\\r\\nПриход (Продажа товара)\\r\\nКассовый чек № 21\\r\\nДокумент на продажу № 20\\r\\nНДС\\r\\nЦена\\r\\nКол-во\\r\\nЕд.Изм.\\r\\nСкидка\\r\\nСумма\\r\\nСалфетки 365 ДНЕЙ однослойные 250шт\\r\\n21.59\\r\\n74.99\\r\\n2.0\\r\\nшт\\r\\n20.46\\r\\n129.52\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nСыр LA PAULINA Пармезан 45% ф/у, з/а вес\\r\\n46.91\\r\\n2858.9\\r\\n0.209\\r\\nкг\\r\\n81.5\\r\\n516.01\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nФиле кур ПЕТЕЛИНКА подлож охл вес 1кг\\r\\n38.37\\r\\n519.99\\r\\n0.94\\r\\nкг\\r\\n66.67\\r\\n422.12\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nСыр LA PAULINA Пармезан 45% ф/у, з/а вес\\r\\n52.75\\r\\n2858.9\\r\\n0.235\\r\\nкг\\r\\n91.64\\r\\n580.2\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nКарбонад ИНЕЙ к/в в/у 300г\\r\\n43.18\\r\\n299.99\\r\\n1.0\\r\\nшт\\r\\n40.91\\r\\n259.08\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nР/к тунец ЛЕНТА филе в с/с 160г\\r\\n32.49\\r\\n209.99\\r\\n2.0\\r\\nшт\\r\\n62.64\\r\\n357.34\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nЗефир ШАРМЭЛЬ Классический в шокол 250г\\r\\n100.75\\r\\n349.99\\r\\n2.0\\r\\nшт\\r\\n95.48\\r\\n604.5\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nФиле бедра индейки ИНДИЛАЙТ ГВУ 410г\\r\\n50.24\\r\\n319.99\\r\\n2.0\\r\\nшт\\r\\n87.3\\r\\n552.68\\r\\nПризнак способа расчета\\r\\nПолный расчёт\\r\\nПакет ЛЕНТА 9кг\\r\\n1.29\\r\\n8.99\\r\\n1.0\\r\\nшт\\r\\n1.23\\r\\n7.76\\r\\nПризнак способа расчета\\r\\nПолный расчёт\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/receipt/upload-text",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"receipt",
+								"upload-text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload image receipt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"description": "← add file in \"file\" field before sending",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/receipt/upload-image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"receipt",
+								"upload-image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all receipts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/receipt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"receipt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "receipt by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/receipt/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"receipt",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Хлебцы хрустящие\",\r\n        \"price\": 16.00,\r\n        \"categoryId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/receipt/items/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"receipt",
+								"items",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/receipt/stats?month=05&year=2025",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"receipt",
+								"stats"
+							],
+							"query": [
+								{
+									"key": "month",
+									"value": "05"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin stats controller",
+			"item": [
+				{
+					"name": "recalculate-all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/admin/statistics/recalculate-all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"statistics",
+								"recalculate-all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

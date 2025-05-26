@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: ${PROFILE:demo}
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/smart-receipt_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/master.yaml
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:smart-receipt-group}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  cache:
+    type: redis
+  redis:
+    enable: true
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+server:
+  port: ${PORT:8080}
+jwt:
+  secret: ${JWT_SECRET:secretsecretsecretsecretsecretsecretsecret}
+  expiration-ms: ${JWT_EXPIRATION_MS:600000}
+gigachat:
+  model: ${GIGACHAT_MODEL:GigaChat:latest}
+  temperature: ${GIGACHAT_TEMPERATURE:0.3}
+  n: ${GIGACHAT_N:1}
+  max-tokens: ${GIGACHAT_MAX_TOKENS:3000}
+  repetition-penalty: ${GIGACHAT_REP_PENALTY:1.0}
+  ai:
+    token: ${GIGACHAT_TOKEN:}
+    scope: GIGACHAT_API_PERS
+feign:
+  ai-auth:
+    name: gigachat-auth
+    url: https://ngw.devices.sberbank.ru:9443/api/v2/oauth
+  ai:
+    name: gigachat
+    url: https://gigachat.devices.sberbank.ru/api/v1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+tesseract:
+  datapath: ${TESSDATA_PATH:resources/tessdata}
+logging.level.io.lettuce.core: DEBUG

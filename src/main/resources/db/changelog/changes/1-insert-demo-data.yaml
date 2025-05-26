@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-insert-demo-user
+      author: up156
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: email, value: "demo@demo.demo" }
+              - column: { name: full_name, value: "demo user" }
+              - column: { name: password, value: "$2a$10$43A0quUCggzGBn8Vo8HKs.P4y0HJGi1GIBAta8pW6OtkrxcOaBbGe" }
+              - column: { name: is_admin, valueBoolean: false }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: email, value: "admin@admin.admin" }
+              - column: { name: full_name, value: "admin admin" }
+              - column: { name: password, value: "$2a$10$E69RYl/8tbfB6QJ/3KUpduD0Jm4vDk5mPgsKBstOi4Gj7Z1iJMQPy" }
+              - column: { name: is_admin, valueBoolean: true }
+
+  - changeSet:
+      id: 2-insert-demo-categories
+      author: up156
+      changes:
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: "Овощи и фрукты" }
+              - column: { name: description, value: "Свежие овощи, фрукты, зелень" }
+              - column: { name: monthly_limit, valueNumeric: 10000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: "Молочные продукты" }
+              - column: { name: description, value: "Молоко, сыр, йогурты" }
+              - column: { name: monthly_limit, valueNumeric: 10000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: "Хлебобулочные изделия" }
+              - column: { name: description, value: "Хлеб, булки" }
+              - column: { name: monthly_limit, valueNumeric: 10000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: "Мясо, птица, рыба" }
+              - column: { name: description, value: "Свинина, курица, говядина, рыба" }
+              - column: { name: monthly_limit, valueNumeric: 30000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: "Другое" }
+              - column: { name: description, value: "Все остальное" }
+              - column: { name: monthly_limit, valueNumeric: 15000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: name, value: "Сладости, кондитерский" }
+              - column: { name: description, value: "Шоколад, конфеты, печенье" }
+              - column: { name: monthly_limit, valueNumeric: 10000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: name, value: "Напитки" }
+              - column: { name: description, value: "Сок, вода, чай, кофе" }
+              - column: { name: monthly_limit, valueNumeric: 10000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: category
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: name, value: "Бакалея" }
+              - column: { name: description, value: "Рис, гречка, макароны" }
+              - column: { name: monthly_limit, valueNumeric: 10000.00 }
+              - column: { name: user_id, valueNumeric: 1 }
+
+  - changeSet:
+      id: 3-set-sequences
+      author: up156
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: SELECT setval('category_id_seq', (SELECT MAX(id) FROM category));
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: SELECT setval('product_id_seq', COALESCE((SELECT MAX(id) FROM product), 1));

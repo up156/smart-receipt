@@ -1,0 +1,12 @@
+
+feign:
+  ai:
+    name: gigachat-client
+    url: http://mocked-gigachat
+  ai-auth:
+    name: gigachat-auth
+    url: http://mocked-auth
+
+app:
+  demo-mode: true
+
