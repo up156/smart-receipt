@@ -36,7 +36,7 @@ POST /api/v1/auth/login
 {  
   "email": "demo@demo.demo",  
   "password": "demo"  
-}
+}  
 2. **Загрузка чека**
 POST /api/v1/receipt/upload-image  
 Content-Type: multipart/form-data  
